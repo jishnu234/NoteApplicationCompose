@@ -98,15 +98,18 @@ fun NoteCard(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(
-                topEnd = 18.dp, bottomStart = 18.dp))
+            .clip(
+                shape = RoundedCornerShape(
+                    topEnd = 18.dp, bottomStart = 18.dp
+                )
+            )
             .clickable {
-                    onNoteClicked(note)
+                onNoteClicked(note)
             },
-        shape = RoundedCornerShape( topEnd = 18.dp, bottomStart = 18.dp ),
+        shape = RoundedCornerShape(topEnd = 18.dp, bottomStart = 18.dp),
         color = Color(0xFFBFC8C9),
         elevation = 8.dp
-        ) {
+    ) {
         Column(
             modifier = Modifier.padding(12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)

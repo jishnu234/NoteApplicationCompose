@@ -21,6 +21,10 @@ import com.example.noteappliccation.screens.NoteScreen
 import com.example.noteappliccation.screens.NoteViewModel
 import com.example.noteappliccation.ui.theme.NoteAppliccationTheme
 
+
+@RequiresApi(Build.VERSION_CODES.O)
+val notesViewModel = NoteViewModel()
+
 @ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : ComponentActivity() {
@@ -33,7 +37,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val notesViewModel = NoteViewModel()
                     NotesApp(notesViewModel)
                 }
             }
@@ -45,9 +48,10 @@ class MainActivity : ComponentActivity() {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
-
     val noteList = noteViewModel.getAllNotes()
+
     NoteScreen(
+        noteViewModel = noteViewModel,
         notes = noteList,
         addNote = {
             noteViewModel.addNotes(it)
@@ -65,6 +69,6 @@ fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
 @Composable
 fun DefaultPreview() {
     NoteAppliccationTheme {
-//        NoteScreenPreview()
+        NotesApp()
     }
 }

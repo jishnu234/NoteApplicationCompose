@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.noteappliccation.R
@@ -27,24 +26,16 @@ import com.example.noteappliccation.components.InputField
 import com.example.noteappliccation.components.NoteButton
 import com.example.noteappliccation.components.NoteCard
 import com.example.noteappliccation.data.Note
-import com.example.noteappliccation.model.NoteDataSource
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalComposeUiApi
 @Composable
 fun NoteScreen(
+    noteViewModel: NoteViewModel,
     notes: MutableList<Note>,
     addNote: (Note) -> Unit,
     removeNote: (Note) -> Unit
 ) {
-    var text by remember {
-        mutableStateOf("")
-    }
-    var description by remember {
-        mutableStateOf("")
-    }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -73,27 +64,28 @@ fun NoteScreen(
         Spacer(modifier = Modifier.size(24.dp))
         InputField(
             modifier = Modifier.fillMaxWidth(),
-            label = "Title", value = text,
+            label = "Title", value = noteViewModel.getTitleValue(),
             onTextChange = {
                 if (it.all { char ->
                         char.isLetter() || char.isWhitespace()
-                    }) text = it.trim()
+                    }) noteViewModel.updateText(it.trim())
 
             })
         InputField(
             modifier = Modifier.fillMaxWidth(),
-            label = "Note", value = description,
+            label = "Note", value = noteViewModel.getDescriptionValue(),
             onTextChange = {
                 if (it.all { char ->
                         char.isWhitespace() || char.isLetter()
-                    }) description = it.trim()
+                    }) noteViewModel.updateDescription(it.trim())
             })
-        NoteButton(text = "Save") {
-            if (text.isNotEmpty() && description.isNotEmpty()) {
-                addNote(Note(title = text, description = description))
+        NoteButton(text = "ADD NOTES") {
+            if (noteViewModel.getTitleValue().isNotEmpty() && noteViewModel.getDescriptionValue().isNotEmpty()) {
+                addNote(Note(title = noteViewModel.getTitleValue(),
+                    description = noteViewModel.getDescriptionValue()))
             }
-            text = ""
-            description = ""
+            noteViewModel.updateText("")
+            noteViewModel.updateDescription("")
         }
         Divider(modifier = Modifier.padding(top = 16.dp))
         LazyColumn(
