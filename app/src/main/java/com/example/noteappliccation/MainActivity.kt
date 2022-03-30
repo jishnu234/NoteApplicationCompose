@@ -10,15 +10,20 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.noteappliccation.screens.NoteScreenPreview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.noteappliccation.data.Note
+import com.example.noteappliccation.screens.NoteScreen
+import com.example.noteappliccation.screens.NoteViewModel
 import com.example.noteappliccation.ui.theme.NoteAppliccationTheme
 
 @ExperimentalComposeUiApi
+@RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -28,11 +33,29 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    NoteScreenPreview()
+                    val notesViewModel = NoteViewModel()
+                    NotesApp(notesViewModel)
                 }
             }
         }
     }
+}
+
+@ExperimentalComposeUiApi
+@RequiresApi(Build.VERSION_CODES.O)
+@Composable
+fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
+
+    val noteList = noteViewModel.getAllNotes()
+    NoteScreen(
+        notes = noteList,
+        addNote = {
+            noteViewModel.addNotes(it)
+        },
+        removeNote = {
+            noteViewModel.removeNotes(it)
+        }
+    )
 }
 
 
@@ -42,6 +65,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     NoteAppliccationTheme {
-        NoteScreenPreview()
+//        NoteScreenPreview()
     }
 }

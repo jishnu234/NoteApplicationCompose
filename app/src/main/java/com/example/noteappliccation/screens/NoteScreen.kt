@@ -30,27 +30,6 @@ import com.example.noteappliccation.data.Note
 import com.example.noteappliccation.model.NoteDataSource
 
 
-@ExperimentalComposeUiApi
-@Preview(showBackground = true)
-@Composable
-@RequiresApi(Build.VERSION_CODES.O)
-fun NoteScreenPreview() {
-
-    val notes = remember {
-        mutableStateListOf<Note>()
-    }
-
-    NoteScreen(
-        notes = notes,
-        addNote = {
-            notes.add(it)
-        },
-        removeNote = {
-            notes.remove(it)
-        }
-    )
-}
-
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalComposeUiApi
 @Composable
@@ -110,10 +89,10 @@ fun NoteScreen(
                     }) description = it.trim()
             })
         NoteButton(text = "Save") {
-                if (text.isNotEmpty() && description.isNotEmpty()) {
-                        addNote(Note(title = text,description = description))
-                }
-            text =""
+            if (text.isNotEmpty() && description.isNotEmpty()) {
+                addNote(Note(title = text, description = description))
+            }
+            text = ""
             description = ""
         }
         Divider(modifier = Modifier.padding(top = 16.dp))
@@ -123,12 +102,12 @@ fun NoteScreen(
         ) {
             items(notes) { note ->
 
-                    NoteCard(
-                        note = note,
-                        onNoteClicked = {
-                            removeNote(it)
-                        }
-                    )
+                NoteCard(
+                    note = note,
+                    onNoteClicked = {
+                        removeNote(it)
+                    }
+                )
 
             }
         }
