@@ -8,18 +8,15 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.noteappliccation.data.Note
 import com.example.noteappliccation.screens.NoteScreen
-import com.example.noteappliccation.screens.NoteViewModel
+import com.example.noteappliccation.screens.notescreen.viewmodel.NoteViewModel
 import com.example.noteappliccation.ui.theme.NoteAppliccationTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -27,6 +24,7 @@ val notesViewModel = NoteViewModel()
 
 @ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.O)
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +59,6 @@ fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
         }
     )
 }
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalComposeUiApi

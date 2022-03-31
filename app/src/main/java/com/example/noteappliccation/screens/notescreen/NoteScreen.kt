@@ -1,7 +1,6 @@
 package com.example.noteappliccation.screens
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -26,6 +25,7 @@ import com.example.noteappliccation.components.InputField
 import com.example.noteappliccation.components.NoteButton
 import com.example.noteappliccation.components.NoteCard
 import com.example.noteappliccation.data.Note
+import com.example.noteappliccation.screens.notescreen.viewmodel.NoteViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @ExperimentalComposeUiApi

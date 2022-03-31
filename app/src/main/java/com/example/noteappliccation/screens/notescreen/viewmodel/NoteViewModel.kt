@@ -1,4 +1,4 @@
-package com.example.noteappliccation.screens
+package com.example.noteappliccation.screens.notescreen.viewmodel
 
 import android.icu.text.CaseMap
 import android.os.Build
