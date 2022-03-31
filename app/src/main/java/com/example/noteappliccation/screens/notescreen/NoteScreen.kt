@@ -1,4 +1,4 @@
-package com.example.noteappliccation.screens
+package com.example.noteappliccation.screens.notescreen
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -32,7 +32,7 @@ import com.example.noteappliccation.screens.notescreen.viewmodel.NoteViewModel
 @Composable
 fun NoteScreen(
     noteViewModel: NoteViewModel,
-    notes: MutableList<Note>,
+    notes: List<Note>,
     addNote: (Note) -> Unit,
     removeNote: (Note) -> Unit
 ) {
@@ -68,7 +68,7 @@ fun NoteScreen(
             onTextChange = {
                 if (it.all { char ->
                         char.isLetter() || char.isWhitespace()
-                    }) noteViewModel.updateText(it.trim())
+                    }) noteViewModel.updateText(it)
 
             })
         InputField(
@@ -77,7 +77,7 @@ fun NoteScreen(
             onTextChange = {
                 if (it.all { char ->
                         char.isWhitespace() || char.isLetter()
-                    }) noteViewModel.updateDescription(it.trim())
+                    }) noteViewModel.updateDescription(it)
             })
         NoteButton(text = "ADD NOTES") {
             if (noteViewModel.getTitleValue().isNotEmpty() && noteViewModel.getDescriptionValue().isNotEmpty()) {

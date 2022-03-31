@@ -4,23 +4,20 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.noteappliccation.screens.NoteScreen
+import com.example.noteappliccation.screens.notescreen.NoteScreen
 import com.example.noteappliccation.screens.notescreen.viewmodel.NoteViewModel
 import com.example.noteappliccation.ui.theme.NoteAppliccationTheme
 import dagger.hilt.android.AndroidEntryPoint
-
-
-@RequiresApi(Build.VERSION_CODES.O)
-val notesViewModel = NoteViewModel()
 
 @ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.O)
@@ -35,7 +32,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    NotesApp(notesViewModel)
+                    val noteViewModel: NoteViewModel by viewModels()
+                    NotesApp(noteViewModel)
                 }
             }
         }
@@ -45,9 +43,9 @@ class MainActivity : ComponentActivity() {
 @ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
-    val noteList = noteViewModel.getAllNotes()
+fun NotesApp(noteViewModel: NoteViewModel) {
 
+    val noteList = noteViewModel.noteList.collectAsState().value
     NoteScreen(
         noteViewModel = noteViewModel,
         notes = noteList,
@@ -66,6 +64,6 @@ fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
 @Composable
 fun DefaultPreview() {
     NoteAppliccationTheme {
-        NotesApp()
+//        NotesApp()
     }
 }

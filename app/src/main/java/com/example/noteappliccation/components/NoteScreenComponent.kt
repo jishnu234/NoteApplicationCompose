@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.noteappliccation.data.Note
+import com.example.noteappliccation.util.formatDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -37,7 +38,6 @@ fun InputField(
     label: String,
     imeAction: ImeAction = ImeAction.Next,
     inputType: KeyboardType = KeyboardType.Text,
-    maxLine: Int = 1,
     value: String,
     onTextChange: (String) -> Unit,
     onImeAction: () -> Unit = {}
@@ -48,7 +48,6 @@ fun InputField(
         label = { Text(text = label) },
         value = value,
         onValueChange = onTextChange,
-        maxLines = maxLine,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent
         ),
@@ -128,7 +127,7 @@ fun NoteCard(
             )
             Text(
                 //This will format the date and in user understandable format
-                text = note.entryTime.format(DateTimeFormatter.ofPattern("EEE, d MMM")),
+                text = formatDate(note.entryTime.time),
                 modifier = Modifier.alpha(0.5f),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Light,
